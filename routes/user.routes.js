@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/User.model');
 const Videogame = require('../models/Videogame.model');
 
+
+// create a new game for the db
 router.post("/:idUser/create", (req, res, next) => {
 
     const {idUser} = req.params;
