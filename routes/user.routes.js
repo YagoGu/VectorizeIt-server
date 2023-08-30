@@ -31,5 +31,17 @@ router.get("/:idUser/created-games", (req, res, next) => {
     })
 })
 
+// modify a created game
+router.post("/:idUser/:idGame/update", (req, res, next) => {
+
+    const {idUser, idGame} = req.params;
+
+    Videogame.findOneAndUpdate( { $and: [ {contributed_by: idUser}, {_id: idGame}]},
+        {title: "Edu el tijeras"}
+    )
+    .then((videogames) => {
+        res.send(videogames)
+    })
+})
 
 module.exports = router;
