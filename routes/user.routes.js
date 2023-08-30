@@ -20,4 +20,16 @@ router.post("/:idUser/create", (req, res, next) => {
     })
 })
 
+//display your created games
+router.get("/:idUser/created-games", (req, res, next) => {
+
+    const {idUser} = req.params;
+
+    Videogame.find( {contributed_by: idUser} )
+    .then((videogames) => {
+        res.send(videogames)
+    })
+})
+
+
 module.exports = router;
