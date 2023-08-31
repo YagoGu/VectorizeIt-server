@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const Videogame = require('../models/Videogame.model');
 const User = require('../models/User.model');
+const Review = require('../models/Review.model')
 
 //get your user info
 router.get("/:idUser", (req, res, next) => {
@@ -42,7 +43,11 @@ router.post("/:idUser/delete", (req, res, next) => {
     const {idUser} = req.params;
 
     User.findByIdAndDelete(idUser)
-    .then ((user) => console.log(user))
+    .then ((user) => res.send(user))
+
+    //delete every review related to the user
+    Review.deleteMany({created_by: idUser})
+    .then ((reviews) => res.send(reviews))
 })
 
 // create a new game for the db
@@ -96,6 +101,12 @@ router.post("/:idUser/:idGame/delete", (req, res, next) => {
         res.send(videogame)
     })
 
+    Review.deleteMany(
+        {related_to: idGame}
+    )
+    .then( (reviews) => {
+        res.send(reviews)
+    })
 })
 
 module.exports = router;
