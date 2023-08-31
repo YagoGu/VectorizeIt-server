@@ -26,9 +26,13 @@ const userSchema = new Schema(
       required: [true, "Birthday is required."]
     },
     profile_picture: {
-        type: String,
-        default: "https://res.cloudinary.com/dpfyow85s/image/upload/v1693389979/VectorizeIt/default-user.png"
+      type: String,
+      default: "https://res.cloudinary.com/dpfyow85s/image/upload/v1693389979/VectorizeIt/default-user.png"
     },
+    games_played: {
+      type: [Schema.Types.ObjectId],
+      ref: "Videogame"
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
