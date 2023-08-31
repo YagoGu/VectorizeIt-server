@@ -11,8 +11,9 @@ router.get("/:idUser", (req, res, next) => {
 
     const {idUser} = req.params;
 
-    User.findById(idUser)
+    User.findById(idUser).populate("games_played")
     .then( (user) => {
+        console.log(user)
         res.send(user)
     })
 })
