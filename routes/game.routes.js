@@ -16,6 +16,7 @@ router.get("/:idGame", (req, res, next) => {
         populate: {
             path: "created_by",  // Populate created_by field within reviews
             model: "User",  // Specify the model to populate
+            select: "username"
         }}])
     .then((videogame) => {
         res.send(videogame)

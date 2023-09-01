@@ -48,6 +48,7 @@ router.get("/:idGame/all", (req, res, next) => {
     const {idGame} = req.params;
 
     Review.find({related_to: idGame})
+    .populate('created_by')
     .then((data) => {
         res.send(data)
     })
