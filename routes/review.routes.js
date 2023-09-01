@@ -34,7 +34,7 @@ router.post("/:idUser/:idGame/create", (req, res, next) => {
     Review.create({
         created_by: idUser,
         related_to: idGame,
-        rate: 2,
+        rate: 7,
         description: "kk",
         played_hours: 20
     })

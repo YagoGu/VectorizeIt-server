@@ -70,7 +70,7 @@ router.get("/:idUser/created-games", (req, res, next) => {
 
     const {idUser} = req.params;
 
-    Videogame.find( {contributed_by: idUser} )
+    Videogame.find( {contributed_by: idUser} ).populate('reviews')
     .then((videogames) => {
         res.send(videogames)
     })

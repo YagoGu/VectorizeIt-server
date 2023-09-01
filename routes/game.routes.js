@@ -8,7 +8,15 @@ router.get("/:idGame", (req, res, next) => {
 
     const {idGame} = req.params;
 
-    Videogame.findById(idGame).populate('contributed_by')
+    Videogame.findById(idGame)
+    .populate("contributed_by")  // Populate contributed_by field
+    .populate([{
+        path: "reviews",  // Populate reviews field
+        model: "Review",  // Specify the model to populate
+        populate: {
+            path: "created_by",  // Populate created_by field within reviews
+            model: "User",  // Specify the model to populate
+        }}])
     .then((videogame) => {
         res.send(videogame)
     })
@@ -34,7 +42,7 @@ router.get("/:idUser/played-games", (req, res, next) => {
 
     const {idUser} = req.params;
 
-    User.findById(idUser)
+    User.findById(idUser).populate('games_played')
     .then((videogames) => {
         res.send(videogames.games_played)
     })
