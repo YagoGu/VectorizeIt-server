@@ -13,7 +13,6 @@ router.get("/:idUser", (req, res, next) => {
 
     User.findById(idUser).populate('games_played')
     .then( (user) => {
-        console.log(user)
         res.send(user)
     })
 })
