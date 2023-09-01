@@ -8,7 +8,7 @@ router.get("/:idGame", (req, res, next) => {
 
     const {idGame} = req.params;
 
-    Videogame.findById(idGame)
+    Videogame.findById(idGame).populate('contributed_by')
     .then((videogame) => {
         res.send(videogame)
     })
