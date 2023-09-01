@@ -25,6 +25,10 @@ const videogameSchema = new Schema(
       contributed_by: {
         type: Schema.Types.ObjectId,
         ref: "User"
+      },
+      reviews: {
+        type: [Schema.Types.ObjectId],
+        ref: "Review"
       }
     },
     {
