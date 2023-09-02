@@ -30,15 +30,32 @@ router.post("/:idReview/delete", (req, res, next) => {
 router.post("/:idUser/:idGame/create", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
+    const {description, rate, playedHours} = req.body;
 
     Review.create({
         created_by: idUser,
         related_to: idGame,
-        rate: 7,
-        description: "kk",
-        played_hours: 20
+        rate,
+        description,
+        played_hours: playedHours
     })
-    .then((rev) => res.send(rev))
+    .then(() => {
+        Review.findOne({created_by: idUser, related_to: idGame})
+        .then((review) => {
+            return review
+        })
+        .then((data) => {
+            console.log(data)
+            Videogame.findByIdAndUpdate(idGame, {$push: {reviews: data._id} })
+            .then((game) => {return (
+                console.log(game.reviews)
+            )})
+        })
+    })
+
+    // .then((rev) => res.send(rev))
+
+    console.log(description, rate, playedHours, idUser, idGame)
 
 })
 
