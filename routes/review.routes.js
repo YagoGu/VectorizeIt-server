@@ -7,12 +7,12 @@ const Videogame = require("../models/Videogame.model");
 router.post("/:idReview/update", (req, res, next) => {
 
     const {idReview} = req.params;
-    const {description, rate, playedHours} = req.body;
+    const {description, rate, played_hours} = req.body;
 
     Review.findByIdAndUpdate(idReview, {
         rate,
         description,
-        played_hours: playedHours,
+        played_hours
     })
     .then((rev) => res.send(rev))
 })
