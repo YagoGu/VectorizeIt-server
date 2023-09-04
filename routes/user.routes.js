@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const fileUploader = require('../config/cloudinary.config');
+const path = require("path");
 const Videogame = require('../models/Videogame.model');
 const User = require('../models/User.model');
 const Review = require('../models/Review.model')
@@ -52,7 +54,7 @@ router.post("/:idUser/delete", (req, res, next) => {
 
 // create a new game for the db
 router.post("/:idUser/create", (req, res, next) => {
-
+    // , fileUploader.single('videogame_picture')
     const {idUser} = req.params;
     const {title, corporation, description, pegi} = req.body
 
@@ -63,6 +65,7 @@ router.post("/:idUser/create", (req, res, next) => {
         pegi,
         contributed_by: idUser
     })
+    // videogame_picture: req?.file.path
 })
 
 //display your created games
