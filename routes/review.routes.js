@@ -7,11 +7,12 @@ const Videogame = require("../models/Videogame.model");
 router.post("/:idReview/update", (req, res, next) => {
 
     const {idReview} = req.params;
+    const {description, rate, playedHours} = req.body;
 
     Review.findByIdAndUpdate(idReview, {
-        rate: 6,
-        description: "Genial",
-        played_hours: 700
+        rate,
+        description,
+        played_hours: playedHours,
     })
     .then((rev) => res.send(rev))
 })
@@ -75,14 +76,15 @@ router.get("/:idGame/all", (req, res, next) => {
     })
 })
 
-//obtain a review of game
+//obtain your review of game
 router.get("/:idUser/:idGame", (req, res, next) => {
-
     const {idUser, idGame} = req.params;
-
-    Review.find({created_by: idUser, related_to: idGame})
-
-    .then((rev) => res.send(rev))
+    
+    Review.findOne({created_by: idUser, related_to: idGame})
+    .then((rev) => {
+        console.log(idUser, idGame)
+        return res.send(rev)
+    })
 
 })
 
