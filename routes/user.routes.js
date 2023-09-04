@@ -83,10 +83,16 @@ router.get("/:idUser/created-games", (req, res, next) => {
 router.post("/:idUser/:idGame/update", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
+    const {title, corporation, description, pegi} = req.body
 
     Videogame.findOneAndUpdate( 
         { $and: [ {contributed_by: idUser}, {_id: idGame}]},
-        {title: "Edu el tijeras"}
+        {
+            title,
+            corporation,
+            description,
+            pegi
+        }
     )
     .then((videogames) => {
         res.send(videogames)
