@@ -49,7 +49,7 @@ router.get("/:idUser/games-played", (req, res, next) => {
 })
 
 //delete one game from your played list
-router.post("/:idUser/:idGame/unadd", (req, res, next) => {
+router.post("/:idUser/:idGame/remove", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
 
