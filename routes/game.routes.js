@@ -38,13 +38,13 @@ router.post("/:idUser/:idGame/add", (req, res, next) => {
 })
 
 //see your played games
-router.get("/:idUser/played-games", (req, res, next) => {
+router.get("/:idUser/games-played", (req, res, next) => {
 
     const {idUser} = req.params;
 
     User.findById(idUser).populate('games_played')
     .then((videogames) => {
-        res.send(videogames.games_played)
+        res.send(videogames)
     })
 })
 
