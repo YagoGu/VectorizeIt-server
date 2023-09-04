@@ -54,12 +54,13 @@ router.post("/:idUser/delete", (req, res, next) => {
 router.post("/:idUser/create", (req, res, next) => {
 
     const {idUser} = req.params;
+    const {title, corporation, description, pegi} = req.body
 
     Videogame.create({
-        title: "Dori",
-        corporation: "Walt",
-        description: "You will need to remember",
-        pegi: "pegi3",
+        title,
+        corporation,
+        description,
+        pegi,
         contributed_by: idUser
     })
 })

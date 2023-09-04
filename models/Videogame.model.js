@@ -9,9 +9,11 @@ const videogameSchema = new Schema(
       },
       corporation: {
         type: String,
+        default: "Unknown"
       },
       description: {
         type: String,
+        default: "Unset"
       },
       videogame_picture: {
         type: String,
