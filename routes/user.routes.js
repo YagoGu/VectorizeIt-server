@@ -46,12 +46,13 @@ router.post("/:idUser/delete", (req, res, next) => {
     const {idUser} = req.params;
 
     User.findByIdAndDelete(idUser)
-    .then ((user) => res.send(user))
-
-    //delete every review related to the user
-    Review.deleteMany({created_by: idUser})
-    .then ((reviews) => res.send(reviews))
-
+    .then ((user) => {
+        //delete every review related to the user
+        Review.deleteMany({created_by: idUser})
+        .then ((reviews) => {
+            res.send(reviews)
+        })  
+    })
 
 })
 
