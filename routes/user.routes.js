@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const fileUploader = require('../config/cloudinary.config');
-const path = require("path");
 const Videogame = require('../models/Videogame.model');
 const User = require('../models/User.model');
 const Review = require('../models/Review.model')
@@ -22,7 +20,7 @@ router.get("/:idUser", (req, res, next) => {
 //update your user info
 router.post("/:idUser/update", (req, res, next) => {
     const {idUser} = req.params;
-    const {username, email, birthday, password} = req.body;
+    const {username, email, birthday, password, profile_picture} = req.body;
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -32,7 +30,7 @@ router.post("/:idUser/update", (req, res, next) => {
             username,
             email,
             birthday,
-            profile_picture: "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
+            profile_picture,
             password: hashedPassword
         })
     .then( (user) => {
