@@ -50,6 +50,8 @@ router.post("/:idUser/delete", (req, res, next) => {
     //delete every review related to the user
     Review.deleteMany({created_by: idUser})
     .then ((reviews) => res.send(reviews))
+
+
 })
 
 // create a new game for the db
@@ -103,11 +105,12 @@ router.post("/:idUser/:idGame/update", (req, res, next) => {
 router.post("/:idUser/:idGame/delete", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
-
+    /*
     Videogame.findOneAndDelete( 
         { $and: [ {contributed_by: idUser}, {_id: idGame}]}
     )
     .then( (videogame) => {
+
         res.send(videogame)
     })
 
@@ -116,7 +119,24 @@ router.post("/:idUser/:idGame/delete", (req, res, next) => {
     )
     .then( (reviews) => {
         res.send(reviews)
+    })*/
+
+    Videogame.findOneAndDelete(
+        { $and: [ {contributed_by: idUser}, {_id: idGame}]}
+    )
+    .then( () => {
+        Review.deleteMany({related_to: idGame})
+        .then(() => {
+            User.updateMany(
+                {games_played: { $in: [idGame] }},
+                {$pull: {games_played: idGame}}
+            )
+            .then(() => {
+                res.send("Game, reviews related to it and on games played removed")
+            })
+        } )
     })
+    
 })
 
 module.exports = router;
