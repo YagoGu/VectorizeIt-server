@@ -22,15 +22,16 @@ router.get("/:idUser", (req, res, next) => {
 //update your user info
 router.post("/:idUser/update", (req, res, next) => {
     const {idUser} = req.params;
-    // const {password} = req.body
+    const {username, email, birthday, password} = req.body;
+
     const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = bcrypt.hashSync("password", salt);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     User.findByIdAndUpdate(idUser, 
         {
-            username: "pepitodelospalotes",
-            email: "pepito@gmail.com",
-            birthday: "0006-05-12",
+            username,
+            email,
+            birthday,
             profile_picture: "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
             password: hashedPassword
         })
