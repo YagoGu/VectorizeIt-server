@@ -58,13 +58,14 @@ router.post("/:idUser/delete", (req, res, next) => {
 router.post("/:idUser/create", (req, res, next) => {
     // , fileUploader.single('videogame_picture')
     const {idUser} = req.params;
-    const {title, corporation, description, pegi} = req.body
+    const {title, corporation, description, pegi, videogame_picture} = req.body
 
     Videogame.create({
         title,
         corporation,
         description,
         pegi,
+        videogame_picture,
         contributed_by: idUser
     })
     // videogame_picture: req?.file.path
@@ -85,7 +86,7 @@ router.get("/:idUser/created-games", (req, res, next) => {
 router.post("/:idUser/:idGame/update", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
-    const {title, corporation, description, pegi} = req.body
+    const {title, corporation, description, pegi, videogame_picture} = req.body
 
     Videogame.findOneAndUpdate( 
         { $and: [ {contributed_by: idUser}, {_id: idGame}]},
@@ -93,7 +94,8 @@ router.post("/:idUser/:idGame/update", (req, res, next) => {
             title,
             corporation,
             description,
-            pegi
+            pegi,
+            videogame_picture
         }
     )
     .then((videogames) => {
