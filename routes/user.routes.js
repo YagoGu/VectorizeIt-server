@@ -22,6 +22,19 @@ router.post("/:idUser/update", (req, res, next) => {
     const {idUser} = req.params;
     const {username, email, birthday, password, profile_picture} = req.body;
 
+    // Check if email or password or name are provided as empty strings
+    if (email === "" || password === "" || username === "" || birthday === "") {
+        res.status(400).json({ message: "Provide username, email, password and birthday" });
+        return;
+    }
+
+    // This regular expression check that the email is of a valid format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+        res.status(400).json({ message: "Provide a valid email address." });
+        return;
+    }
+
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -107,21 +120,6 @@ router.post("/:idUser/:idGame/update", (req, res, next) => {
 router.post("/:idUser/:idGame/delete", (req, res, next) => {
 
     const {idUser, idGame} = req.params;
-    /*
-    Videogame.findOneAndDelete( 
-        { $and: [ {contributed_by: idUser}, {_id: idGame}]}
-    )
-    .then( (videogame) => {
-
-        res.send(videogame)
-    })
-
-    Review.deleteMany(
-        {related_to: idGame}
-    )
-    .then( (reviews) => {
-        res.send(reviews)
-    })*/
 
     Videogame.findOneAndDelete(
         { $and: [ {contributed_by: idUser}, {_id: idGame}]}
